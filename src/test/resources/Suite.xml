@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="AutomatedWebTesting">
+
+    <!--Browser test (Chrome, Firefox, Edge)-->
+    <parameter name="browser" value="Chrome"/>
+    <parameter name="url" value="https://www.saucedemo.com"/>
+
+    <test name="Suite">
+        <classes>
+            <class name="com.automation.Login.LoginTest"/>
+        </classes>
+    </test>
+
+</suite>
