@@ -17,21 +17,25 @@ public abstract class BaseTest {
     protected Faker faker = new Faker();
 
     @BeforeSuite
-    public void beforeSuite(){
+    public void beforeSuite() {
         log.info("Before suite");
     }
 
     @BeforeMethod
     @Parameters({"browser", "url"})
-    public void beforeMethod(String browser, String url){
+    public void beforeMethod(String browser, String url) {
         log.info("Before method, loading page: {}", url);
         driver = new Driver(browser);
         loginPage = new LoginPage(driver.getDriver(), url);
     }
 
     @AfterMethod
-    public void afterMethod(){
+    public void afterMethod() {
         log.info("After method, disposing driver");
         driver.getDriver().quit();
+    }
+
+    protected void logInfo(String msg) {
+        log.info(msg);
     }
 }

@@ -4,11 +4,7 @@ import com.automation.pages.base.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.util.concurrent.TimeUnit;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class LoginPage extends BasePage {
@@ -16,7 +12,7 @@ public class LoginPage extends BasePage {
     @FindBy(id = "user-name")
     private WebElement usernameInput;
 
-    @FindBy(id = "user-name")
+    @FindBy(id = "password")
     private WebElement passwordInput;
 
     @FindBy(css = "h3[data-test = 'error']")
@@ -41,23 +37,27 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    public LoginPage setPassword(String password){
+    public LoginPage setPassword(String password) {
         passwordInput.sendKeys(password);
         return this;
     }
 
-    public <T> T clickOnLoginButton(boolean shouldLogin){
+    public <T> T clickOnLoginButton(boolean shouldLogin) {
         loginButton.click();
         return shouldLogin ? (T) new InventoryPage(getDriver()) : (T) this;
     }
 
-    public boolean isValidationErrorDisplayed(){
+    public boolean isValidationErrorDisplayed() {
         return validationError.isDisplayed();
+    }
+
+    public String validationErrorText() {
+        return validationError.getText();
     }
 
     public boolean usernameAndPasswordAreHighlighted() {
         return usernameInput.getAttribute("class").contains("error") && passwordInput.getAttribute("class")
-        .contains("error");
+                .contains("error");
     }
 
     @Override
@@ -70,4 +70,5 @@ public class LoginPage extends BasePage {
         waitUntilPageLoad();
         return usernameInput.isDisplayed();
     }
+
 }

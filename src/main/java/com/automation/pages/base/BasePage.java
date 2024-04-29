@@ -26,4 +26,8 @@ public abstract class BasePage {
     protected abstract void waitUntilPageLoad();
 
     public abstract boolean isPageLoaded();
+
+    public String getPageURL() {
+        return getDriver().getCurrentUrl();
+    }
 }
