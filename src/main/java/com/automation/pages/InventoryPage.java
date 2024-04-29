@@ -18,6 +18,9 @@ public class InventoryPage extends BasePage {
     @FindBy(id = "shopping_cart_container")
     private WebElement shoppingCartButton;
 
+    @FindBy(id = "logout_sidebar_link")
+    private WebElement logoutBtn;
+
     /**
      * Constructor of the class, for initialize the driver
      *
@@ -25,6 +28,16 @@ public class InventoryPage extends BasePage {
      */
     public InventoryPage(WebDriver driver) {
         super(driver);
+    }
+
+    public InventoryPage clickHamburgerMenu() {
+        waitAndClick(hamburgerMenu);
+        return this;
+    }
+
+    public <T> T clickLogoutBtn(boolean shouldLogout) {
+        logoutBtn.click();
+        return shouldLogout ? (T) new LoginPage(getDriver()) : (T) this;
     }
 
     @Override

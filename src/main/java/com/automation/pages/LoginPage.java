@@ -32,6 +32,10 @@ public class LoginPage extends BasePage {
         driver.get(url);
     }
 
+    public LoginPage(WebDriver driver) {
+        super(driver);
+    }
+
     public LoginPage setUsername(String username) {
         usernameInput.sendKeys(username);
         return this;
@@ -60,6 +64,10 @@ public class LoginPage extends BasePage {
                 .contains("error");
     }
 
+    public boolean emptyTextInputs() {
+        return usernameInput.getAttribute("value").isEmpty() && passwordInput.getAttribute("value").isEmpty();
+    }
+
     @Override
     protected void waitUntilPageLoad() {
         getWait().until(visibilityOf(usernameInput));
@@ -70,5 +78,4 @@ public class LoginPage extends BasePage {
         waitUntilPageLoad();
         return usernameInput.isDisplayed();
     }
-
 }

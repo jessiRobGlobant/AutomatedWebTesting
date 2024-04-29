@@ -1,4 +1,4 @@
-package com.automation.Login;
+package com.automation.autentication;
 
 import com.automation.base.BaseTest;
 import com.automation.pages.InventoryPage;
@@ -27,12 +27,12 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    @Parameters({"url"})
-    public void validateLoginSuccessful(String url) {
+    @Parameters({"url", "baseUsername", "password"})
+    public void validateLoginSuccessful(String url, String baseUsername, String password) {
         Assert.assertTrue(loginPage.isPageLoaded(), "The login page is not visible");
 
-        loginPage.setUsername("standard_user")
-                .setPassword("secret_sauce");
+        loginPage.setUsername(baseUsername)
+                .setPassword(password);
         InventoryPage inventoryPage = loginPage.clickOnLoginButton(true);
 
         Assert.assertTrue(inventoryPage.isPageLoaded(), "The inventory page is not displayed");
@@ -48,7 +48,7 @@ public class LoginTest extends BaseTest {
 
         loginPage.setUsername(invalidUsername)
                 .setPassword(faker.internet().password(8, 14))
-                .clickOnLoginButton(true);
+                .clickOnLoginButton(false);
 
         Assert.assertTrue(loginPage.isValidationErrorDisplayed(), "The login error is not displayed");
         Assert.assertTrue(loginPage.usernameAndPasswordAreHighlighted(), "Inputs are not highlighted");
@@ -56,12 +56,13 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    public void validateInvalidPassword() {
+    @Parameters({"baseUsername"})
+    public void validateInvalidPassword(String baseUsername) {
         Assert.assertTrue(loginPage.isPageLoaded(), "The login page is not visible");
 
-        loginPage.setUsername("standard_user")
+        loginPage.setUsername(baseUsername)
                 .setPassword("NotAPassword")
-                .clickOnLoginButton(true);
+                .clickOnLoginButton(false);
 
         Assert.assertTrue(loginPage.isValidationErrorDisplayed(), "The login error is not displayed");
         Assert.assertTrue(loginPage.usernameAndPasswordAreHighlighted(), "Inputs are not highlighted");
@@ -73,7 +74,7 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(loginPage.isPageLoaded(), "The login page is not visible");
 
         loginPage.setPassword(faker.internet().password(8, 14))
-                .clickOnLoginButton(true);
+                .clickOnLoginButton(false);
 
         Assert.assertTrue(loginPage.isValidationErrorDisplayed(), "The login error is not displayed");
         Assert.assertTrue(loginPage.usernameAndPasswordAreHighlighted(), "Inputs are not highlighted");
@@ -81,11 +82,12 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    public void validateNotPassword() {
+    @Parameters({"baseUsername"})
+    public void validateNotPassword(String baseUsername) {
         Assert.assertTrue(loginPage.isPageLoaded(), "The login page is not visible");
 
-        loginPage.setUsername("standard_user")
-                .clickOnLoginButton(true);
+        loginPage.setUsername(baseUsername)
+                .clickOnLoginButton(false);
 
         Assert.assertTrue(loginPage.isValidationErrorDisplayed(), "The login error is not displayed");
         Assert.assertTrue(loginPage.usernameAndPasswordAreHighlighted(), "Inputs are not highlighted");

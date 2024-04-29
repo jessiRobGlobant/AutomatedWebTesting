@@ -5,10 +5,13 @@
     <!--Browser test (Chrome, Firefox, Edge)-->
     <parameter name="browser" value="Chrome"/>
     <parameter name="url" value="https://www.saucedemo.com"/>
+    <parameter name="baseUsername" value="standard_user"/>
+    <parameter name="password" value="secret_sauce"/>
 
     <test name="Suite">
         <classes>
-            <class name="com.automation.Login.LoginTest"/>
+            <!--class name="com.automation.autentication.LoginTest"/-->
+            <class name="com.automation.autentication.LogoutTest"/>
         </classes>
     </test>
 
