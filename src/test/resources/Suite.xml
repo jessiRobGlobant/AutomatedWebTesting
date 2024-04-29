@@ -11,7 +11,8 @@
     <test name="Suite">
         <classes>
             <!--class name="com.automation.autentication.LoginTest"/-->
-            <class name="com.automation.autentication.LogoutTest"/>
+            <!--class name="com.automation.autentication.LogoutTest"/-->
+            <class name="com.automation.buy_products.addToCartTest"/>
         </classes>
     </test>
 
