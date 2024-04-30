@@ -1,4 +1,4 @@
-package com.automation.autentication;
+package com.automation.authentication;
 
 import com.automation.base.BaseTest;
 import com.automation.pages.InventoryPage;

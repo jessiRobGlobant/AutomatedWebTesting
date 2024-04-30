@@ -16,7 +16,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 public class CartPage extends BasePage {
 
     @FindBy(className = "checkout_button")
-    private WebElement continueBtn;
+    private WebElement checkOutBtn;
 
     @FindBy(className = "inventory_item_name")
     private List<WebElement> productsNames;
@@ -24,8 +24,23 @@ public class CartPage extends BasePage {
     @FindBy(className = "cart_quantity")
     private List<WebElement> productsQuantity;
 
+    @FindBy(className = "cart_button")
+    private List<WebElement> removeBtns;
+
     public CartPage(WebDriver driver) {
         super(driver);
+    }
+
+    public CartPage removeAllItems() {
+        for (WebElement removeBtn : removeBtns) {
+            waitAndClick(removeBtn);
+        }
+        return this;
+    }
+
+    public Checkout1Page goToCheckOut() {
+        waitAndClick(checkOutBtn);
+        return new Checkout1Page(getDriver());
     }
 
     public int numberOfItems() {
@@ -52,12 +67,12 @@ public class CartPage extends BasePage {
     @Override
     protected void waitUntilPageLoad() {
         getWait().withTimeout(ofSeconds(2)).pollingEvery(ofMillis(500)).ignoring(NoSuchElementException.class)
-                .until(visibilityOf(continueBtn));
+                .until(visibilityOf(checkOutBtn));
     }
 
     @Override
     public boolean isPageLoaded() {
         waitUntilPageLoad();
-        return continueBtn.isDisplayed();
+        return checkOutBtn.isDisplayed();
     }
 }

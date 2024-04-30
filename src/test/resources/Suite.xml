@@ -10,9 +10,11 @@
 
     <test name="Suite">
         <classes>
-            <!--class name="com.automation.autentication.LoginTest"/-->
-            <!--class name="com.automation.autentication.LogoutTest"/-->
+            <class name="com.automation.authentication.LoginTest"/>
+            <class name="com.automation.authentication.LogoutTest"/>
             <class name="com.automation.buy_products.addToCartTest"/>
+            <class name="com.automation.buy_products.removeProducts"/>
+            <class name="com.automation.buy_products.checkOutTest"/>
         </classes>
     </test>
 
