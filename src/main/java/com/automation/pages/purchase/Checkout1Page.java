@@ -1,4 +1,4 @@
-package com.automation.pages;
+package com.automation.pages.purchase;
 
 import com.automation.pages.base.BasePage;
 import org.openqa.selenium.NoSuchElementException;
@@ -52,14 +52,9 @@ public class Checkout1Page extends BasePage {
 
 
     @Override
-    protected void waitUntilPageLoad() {
+    public boolean isPageLoaded() {
         getWait().withTimeout(ofSeconds(2)).pollingEvery(ofMillis(500)).ignoring(NoSuchElementException.class)
                 .until(visibilityOf(continueBtn));
-    }
-
-    @Override
-    public boolean isPageLoaded() {
-        waitUntilPageLoad();
         return continueBtn.isDisplayed();
     }
 }

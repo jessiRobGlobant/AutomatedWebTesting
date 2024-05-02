@@ -1,28 +1,19 @@
 package com.automation.buy_products;
 
-import com.automation.base.BaseTest;
-import com.automation.pages.CartPage;
-import com.automation.pages.InventoryPage;
+import com.automation.core.inventory.InventoryBaseTest;
+import com.automation.pages.cart.CartPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.util.Map;
 
-public class removeProducts extends BaseTest {
+public class removeProducts extends InventoryBaseTest {
     private CartPage cartPage;
     private Map<String, Integer> products;
 
     @BeforeMethod
-    @Parameters({"baseUsername", "password"})
-    public void login(String baseUsername, String password) {
-        // Login
-        loginPage.isPageLoaded();
-        loginPage.setUsername(baseUsername)
-                .setPassword(password);
-        InventoryPage inventoryPage = loginPage.clickOnLoginButton(true);
-
+    public void addProducts() {
         //Add products
         products = inventoryPage.getRandomProducts(3);
         products.keySet().forEach(name -> logInfo(String.format("Product to add: %s", name)));

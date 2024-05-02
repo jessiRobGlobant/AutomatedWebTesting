@@ -1,27 +1,15 @@
 package com.automation.buy_products;
 
-import com.automation.base.BaseTest;
-import com.automation.pages.CartPage;
-import com.automation.pages.InventoryPage;
+import com.automation.core.inventory.InventoryBaseTest;
+import com.automation.pages.cart.CartPage;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.util.Map;
 
-public class addToCartTest extends BaseTest {
-    private InventoryPage inventoryPage;
+public class addToCartTest extends InventoryBaseTest {
     private Map<String, Integer> products;
 
-    @BeforeMethod
-    @Parameters({"baseUsername", "password"})
-    public void login(String baseUsername, String password) {
-        loginPage.isPageLoaded();
-        loginPage.setUsername(baseUsername)
-                .setPassword(password);
-        inventoryPage = loginPage.clickOnLoginButton(true);
-    }
 
     @Test
     public void addRandomProductsToCart() {

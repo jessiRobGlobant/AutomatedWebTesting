@@ -1,6 +1,7 @@
-package com.automation.pages;
+package com.automation.pages.cart;
 
 import com.automation.pages.base.BasePage;
+import com.automation.pages.purchase.Checkout1Page;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -65,14 +66,9 @@ public class CartPage extends BasePage {
     }
 
     @Override
-    protected void waitUntilPageLoad() {
+    public boolean isPageLoaded() {
         getWait().withTimeout(ofSeconds(2)).pollingEvery(ofMillis(500)).ignoring(NoSuchElementException.class)
                 .until(visibilityOf(checkOutBtn));
-    }
-
-    @Override
-    public boolean isPageLoaded() {
-        waitUntilPageLoad();
         return checkOutBtn.isDisplayed();
     }
 }
