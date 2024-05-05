@@ -1,9 +1,14 @@
 package com.automation.core.login;
 
 import com.automation.core.base.BaseTest;
+import com.automation.enums.User;
 import com.automation.pages.login.LoginPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
+
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Login base test class.
@@ -11,12 +16,28 @@ import org.testng.annotations.Parameters;
 public abstract class LoginBaseTest extends BaseTest {
 
     protected LoginPage loginPage;
-    protected String URL;
 
     @BeforeMethod
     @Parameters({"url"})
     public void navigateToLoginPage(String url) {
         loginPage = new LoginPage(driver.getDriver(), url);
         URL = url;
+    }
+
+    protected String getInvalidUsername() {
+        Set<String> acceptedUsernames = acceptedUsernames();
+        String username = getFaker().internet().username();
+
+        while (acceptedUsernames.contains(username)) {
+            username = getFaker().internet().username();
+        }
+
+        return username;
+    }
+
+    protected static Set<String> acceptedUsernames() {
+        return Arrays.stream(User.values())
+                .map(User::getUsername)
+                .collect(Collectors.toSet());
     }
 }

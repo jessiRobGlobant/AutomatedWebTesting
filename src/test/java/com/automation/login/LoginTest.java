@@ -1,21 +1,19 @@
 package com.automation.login;
 
-import static com.automation.enums.User.LOCKED;
-import static com.automation.enums.User.STANDARD;
-import static org.hamcrest.Matchers.is;
-
 import com.automation.core.login.LoginBaseTest;
 import com.automation.pages.inventory.InventoryPage;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
+import static com.automation.enums.ErrorMsg.*;
+import static com.automation.enums.User.LOCKED;
+import static com.automation.enums.User.STANDARD;
+import static org.hamcrest.Matchers.is;
 
-/** Login tests. */
+
+/**
+ * Login tests.
+ */
 public class LoginTest extends LoginBaseTest {
-
-  public final String DATA_MATCH_MSG_ERROR = "Epic sadface: Username and password do not match any user in this service";
 
   @Test
   public void validateLoginWithWrongCredentials() {
@@ -24,9 +22,9 @@ public class LoginTest extends LoginBaseTest {
     loginPage.setUsername(LOCKED).setPassword(LOCKED).clickOnLoginButton(false);
 
     checkThat.softAssert(
-        "The login error is displayed", loginPage.isValidationErrorDisplayed(), is(true));
+            "The login error is displayed", loginPage.isValidationErrorDisplayed(), is(true));
     checkThat.softAssert(
-        "Inputs are highlighted", loginPage.usernameAndPasswordAreHighlighted(), is(true));
+            "Inputs are highlighted", loginPage.usernameAndPasswordAreHighlighted(), is(true));
   }
 
   @Test
@@ -37,8 +35,9 @@ public class LoginTest extends LoginBaseTest {
             .setPassword(STANDARD);
     InventoryPage inventoryPage = loginPage.clickOnLoginButton(true);
 
-    checkThat.softAssert("The inventory page is not displayed", inventoryPage.isPageLoaded(), is(true));
-    checkThat.softAssert( String.format("The url is not %s/inventory.html", URL),
+    checkThat.softAssert("The inventory page is not displayed",
+            inventoryPage.isPageLoaded(), is(true));
+    checkThat.softAssert(String.format("The url is not %s/inventory.html", URL),
             inventoryPage.getPageURL().equals(String.format(URL + "/inventory.html")),
             is(true));
   }
@@ -55,9 +54,12 @@ public class LoginTest extends LoginBaseTest {
             .clickOnLoginButton(false);
 
 
-    checkThat.softAssert("The login error is not displayed", loginPage.isValidationErrorDisplayed(), is(true));
-    checkThat.softAssert("Inputs are not highlighted", loginPage.usernameAndPasswordAreHighlighted(), is(true));
-    checkThat.softAssert(String.format("The error message is not '%s'", DATA_MATCH_MSG_ERROR) , loginPage.validationErrorText().equals(DATA_MATCH_MSG_ERROR), is(true));
+    checkThat.softAssert("The login error is not displayed",
+            loginPage.isValidationErrorDisplayed(), is(true));
+    checkThat.softAssert("Inputs are not highlighted",
+            loginPage.usernameAndPasswordAreHighlighted(), is(true));
+    checkThat.softAssert(String.format("The error message is not '%s'",
+            DATA_MATCH.getMsg()), loginPage.validationErrorText(), is(DATA_MATCH.getMsg()));
   }
 
   @Test
@@ -68,65 +70,46 @@ public class LoginTest extends LoginBaseTest {
             .setPassword("NotAPassword")
             .clickOnLoginButton(false);
 
-    checkThat.softAssert("The login error is not displayed", loginPage.isValidationErrorDisplayed(), is(true));
-    checkThat.softAssert( "Inputs are not highlighted", loginPage.usernameAndPasswordAreHighlighted(), is(true));
-    checkThat.softAssert(String.format("The error message is not '%s'", DATA_MATCH_MSG_ERROR) ,loginPage.validationErrorText().equals(DATA_MATCH_MSG_ERROR),is(true));
+    checkThat.softAssert("The login error is not displayed",
+            loginPage.isValidationErrorDisplayed(), is(true));
+    checkThat.softAssert("Inputs are not highlighted",
+            loginPage.usernameAndPasswordAreHighlighted(), is(true));
+    checkThat.softAssert(String.format("The error message is not '%s'",
+            DATA_MATCH.getMsg()), loginPage.validationErrorText(), is(DATA_MATCH.getMsg()));
   }
 
   @Test
   public void validateNotUsername() {
-    String expectedErrorMsg = "Epic sadface: Username is required";
     checkThat.hardAssert("The login page is not visible", loginPage.isPageLoaded(), is(true));
 
     loginPage.setPassword(getFaker().internet().password(8, 14))
             .clickOnLoginButton(false);
 
-    checkThat.softAssert("The login error is not displayed", loginPage.isValidationErrorDisplayed(), is(true));
-    checkThat.softAssert("Inputs are not highlighted", loginPage.usernameAndPasswordAreHighlighted(), is(true));
-    checkThat.softAssert(String.format("The error message is not '%s'", expectedErrorMsg) , loginPage.validationErrorText(), is(true));
+    checkThat.softAssert("The login error is not displayed",
+            loginPage.isValidationErrorDisplayed(), is(true));
+    checkThat.softAssert("Inputs are not highlighted",
+            loginPage.usernameAndPasswordAreHighlighted(), is(true));
+    checkThat.softAssert(String.format("The error message is not '%s'",
+                    REQUIRED_USERNAME.getMsg()), loginPage.validationErrorText(),
+            is(REQUIRED_USERNAME.getMsg()));
   }
 
   @Test
   public void validateNotPassword() {
-    String expectedErrorMsg = "Epic sadface: Password is required";
 
-    checkThat.hardAssert("The login page is not visible", loginPage.isPageLoaded(), is(true));
+    checkThat.hardAssert("The login page is not visible",
+            loginPage.isPageLoaded(), is(true));
 
     loginPage.setUsername(STANDARD)
             .clickOnLoginButton(false);
 
-    checkThat.softAssert("The login error is not displayed", loginPage.isValidationErrorDisplayed(), is(true));
-    checkThat.softAssert("Inputs are not highlighted", loginPage.usernameAndPasswordAreHighlighted(), is(true));
-    checkThat.softAssert(String.format("The error message is not '%s'", expectedErrorMsg), loginPage.validationErrorText().equals(expectedErrorMsg), is(true));
+    checkThat.softAssert("The login error is not displayed",
+            loginPage.isValidationErrorDisplayed(), is(true));
+    checkThat.softAssert("Inputs are not highlighted",
+            loginPage.usernameAndPasswordAreHighlighted(), is(true));
+    checkThat.softAssert(String.format("The error message is not '%s'",
+                    REQUIRED_PASSWORD.getMsg()), loginPage.validationErrorText(),
+            is(REQUIRED_PASSWORD.getMsg()));
   }
 
-  private String getInvalidUsername() {
-    Set<String> acceptedUsernames = acceptedUsernames();
-    String username = getFaker().internet().username();
-
-    while (acceptedUsernames.contains(username)) {
-      username = getFaker().internet().username();
-    }
-
-    return username;
-  }
-
-  private static Set<String> acceptedUsernames() {
-    Object[][] users = acceptedUsers();
-    return Arrays.stream(users)
-            .map(user -> user[0].toString())
-            .collect(Collectors.toSet());
-  }
-
-  private static Object[][] acceptedUsers() {
-    String password = "secret_sauce";
-    return new Object[][]{
-            {"standard_user", password},
-            {"locked_out_user", password},
-            {"problem_user", password},
-            {"performance_glitch_user", password},
-            {"error_user", password},
-            {"visual_user", password},
-    };
-  }
 }

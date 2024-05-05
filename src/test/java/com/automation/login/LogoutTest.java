@@ -16,8 +16,8 @@ public class LogoutTest extends InventoryBaseTest {
         LoginPage loginPage = inventoryPage.clickHamburgerMenu()
                 .clickLogoutBtn(true);
 
-        Assert.assertTrue(loginPage.isPageLoaded(), "The login page is not displayed");
-        Assert.assertEquals(loginPage.getPageURL(), String.format("%s/", URL));
+        checkThat.softAssert("The login page is not displayed", loginPage.isPageLoaded(), is(true));
+        Assert.assertEquals("The ", loginPage.getPageURL(), String.format("%s/", URL));
         Assert.assertTrue(loginPage.emptyTextInputs(), "The login labels are not empty");
     }
 }
