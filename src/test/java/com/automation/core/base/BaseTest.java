@@ -9,7 +9,7 @@ import net.datafaker.Faker;
 @Getter
 public abstract class BaseTest extends BaseHooks {
 
-    private final Faker faker = new Faker();
-    protected Assert checkThat = new Assert();
-    protected String URL;
+  private final Faker faker = new Faker();
+  protected Assert checkThat = new Assert();
+  protected static String URL;
 }

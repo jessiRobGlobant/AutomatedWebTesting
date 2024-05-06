@@ -9,7 +9,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-/** Abstract model page for POM pattern. */
+/**
+ * Abstract model page for POM pattern.
+ */
 @Getter
 public abstract class BasePage {
 
@@ -30,7 +32,7 @@ public abstract class BasePage {
 
   public abstract boolean isPageLoaded();
 
-  public String getPageURL() {
+  public String getPageUrl() {
     return getDriver().getCurrentUrl();
   }
 

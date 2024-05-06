@@ -5,12 +5,12 @@ import static com.automation.enums.ErrorMsg.REQUIRED_PASSWORD;
 import static com.automation.enums.ErrorMsg.REQUIRED_USERNAME;
 import static com.automation.enums.User.LOCKED;
 import static com.automation.enums.User.STANDARD;
+import static java.lang.String.format;
 import static org.hamcrest.Matchers.is;
 
 import com.automation.core.login.LoginBaseTest;
 import com.automation.pages.inventory.InventoryPage;
 import org.testng.annotations.Test;
-
 
 
 /**
@@ -25,9 +25,9 @@ public class LoginTest extends LoginBaseTest {
     loginPage.setUsername(LOCKED).setPassword(LOCKED).clickOnLoginButton(false);
 
     checkThat.softAssert(
-            "The login error is displayed", loginPage.isValidationErrorDisplayed(), is(true));
+        "The login error is displayed", loginPage.isValidationErrorDisplayed(), is(true));
     checkThat.softAssert(
-            "Inputs are highlighted", loginPage.usernameAndPasswordAreHighlighted(), is(true));
+        "Inputs are highlighted", loginPage.usernameAndPasswordAreHighlighted(), is(true));
   }
 
   @Test
@@ -35,34 +35,34 @@ public class LoginTest extends LoginBaseTest {
     checkThat.hardAssert("The login page is not visible", loginPage.isPageLoaded(), is(true));
 
     loginPage.setUsername(STANDARD)
-            .setPassword(STANDARD);
+        .setPassword(STANDARD);
     InventoryPage inventoryPage = loginPage.clickOnLoginButton(true);
 
     checkThat.softAssert("The inventory page is not displayed",
-            inventoryPage.isPageLoaded(), is(true));
-    checkThat.softAssert(String.format("The url is not %s/inventory.html", URL),
-            inventoryPage.getPageURL().equals(String.format(URL + "/inventory.html")),
-            is(true));
+        inventoryPage.isPageLoaded(), is(true));
+    checkThat.softAssert(format("The url is not %s/inventory.html", URL),
+        inventoryPage.getPageUrl().equals(format(URL + "/inventory.html")),
+        is(true));
   }
 
   @Test
   public void validateInvalidUsername() {
     String invalidUsername = getInvalidUsername();
-    logInfo(String.format("Invalid username: %s", invalidUsername));
+    logInfo(format("Invalid username: %s", invalidUsername));
 
     checkThat.hardAssert("The login page is not visible", loginPage.isPageLoaded(), is(true));
 
     loginPage.setUsername(invalidUsername)
-            .setPassword(getFaker().internet().password(8, 14))
-            .clickOnLoginButton(false);
+        .setPassword(getFaker().internet().password(8, 14))
+        .clickOnLoginButton(false);
 
 
     checkThat.softAssert("The login error is not displayed",
-            loginPage.isValidationErrorDisplayed(), is(true));
+        loginPage.isValidationErrorDisplayed(), is(true));
     checkThat.softAssert("Inputs are not highlighted",
-            loginPage.usernameAndPasswordAreHighlighted(), is(true));
-    checkThat.softAssert(String.format("The error message is not '%s'",
-            DATA_MATCH.getMsg()), loginPage.validationErrorText(), is(DATA_MATCH.getMsg()));
+        loginPage.usernameAndPasswordAreHighlighted(), is(true));
+    checkThat.softAssert(format("The error message is not '%s'",
+        DATA_MATCH.getMsg()), loginPage.validationErrorText(), is(DATA_MATCH.getMsg()));
   }
 
   @Test
@@ -70,15 +70,15 @@ public class LoginTest extends LoginBaseTest {
     checkThat.hardAssert("The login page is not visible", loginPage.isPageLoaded(), is(true));
 
     loginPage.setUsername(STANDARD)
-            .setPassword("NotAPassword")
-            .clickOnLoginButton(false);
+        .setPassword("NotAPassword")
+        .clickOnLoginButton(false);
 
     checkThat.softAssert("The login error is not displayed",
-            loginPage.isValidationErrorDisplayed(), is(true));
+        loginPage.isValidationErrorDisplayed(), is(true));
     checkThat.softAssert("Inputs are not highlighted",
-            loginPage.usernameAndPasswordAreHighlighted(), is(true));
-    checkThat.softAssert(String.format("The error message is not '%s'",
-            DATA_MATCH.getMsg()), loginPage.validationErrorText(), is(DATA_MATCH.getMsg()));
+        loginPage.usernameAndPasswordAreHighlighted(), is(true));
+    checkThat.softAssert(format("The error message is not '%s'",
+        DATA_MATCH.getMsg()), loginPage.validationErrorText(), is(DATA_MATCH.getMsg()));
   }
 
   @Test
@@ -86,33 +86,33 @@ public class LoginTest extends LoginBaseTest {
     checkThat.hardAssert("The login page is not visible", loginPage.isPageLoaded(), is(true));
 
     loginPage.setPassword(getFaker().internet().password(8, 14))
-            .clickOnLoginButton(false);
+        .clickOnLoginButton(false);
 
     checkThat.softAssert("The login error is not displayed",
-            loginPage.isValidationErrorDisplayed(), is(true));
+        loginPage.isValidationErrorDisplayed(), is(true));
     checkThat.softAssert("Inputs are not highlighted",
-            loginPage.usernameAndPasswordAreHighlighted(), is(true));
-    checkThat.softAssert(String.format("The error message is not '%s'",
-                    REQUIRED_USERNAME.getMsg()), loginPage.validationErrorText(),
-            is(REQUIRED_USERNAME.getMsg()));
+        loginPage.usernameAndPasswordAreHighlighted(), is(true));
+    checkThat.softAssert(format("The error message is not '%s'",
+            REQUIRED_USERNAME.getMsg()), loginPage.validationErrorText(),
+        is(REQUIRED_USERNAME.getMsg()));
   }
 
   @Test
   public void validateNotPassword() {
 
     checkThat.hardAssert("The login page is not visible",
-            loginPage.isPageLoaded(), is(true));
+        loginPage.isPageLoaded(), is(true));
 
     loginPage.setUsername(STANDARD)
-            .clickOnLoginButton(false);
+        .clickOnLoginButton(false);
 
     checkThat.softAssert("The login error is not displayed",
-            loginPage.isValidationErrorDisplayed(), is(true));
+        loginPage.isValidationErrorDisplayed(), is(true));
     checkThat.softAssert("Inputs are not highlighted",
-            loginPage.usernameAndPasswordAreHighlighted(), is(true));
-    checkThat.softAssert(String.format("The error message is not '%s'",
-                    REQUIRED_PASSWORD.getMsg()), loginPage.validationErrorText(),
-            is(REQUIRED_PASSWORD.getMsg()));
+        loginPage.usernameAndPasswordAreHighlighted(), is(true));
+    checkThat.softAssert(format("The error message is not '%s'",
+            REQUIRED_PASSWORD.getMsg()), loginPage.validationErrorText(),
+        is(REQUIRED_PASSWORD.getMsg()));
   }
 
 }
