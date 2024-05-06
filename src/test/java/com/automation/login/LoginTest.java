@@ -1,13 +1,16 @@
 package com.automation.login;
 
+import static com.automation.enums.ErrorMsg.DATA_MATCH;
+import static com.automation.enums.ErrorMsg.REQUIRED_PASSWORD;
+import static com.automation.enums.ErrorMsg.REQUIRED_USERNAME;
+import static com.automation.enums.User.LOCKED;
+import static com.automation.enums.User.STANDARD;
+import static org.hamcrest.Matchers.is;
+
 import com.automation.core.login.LoginBaseTest;
 import com.automation.pages.inventory.InventoryPage;
 import org.testng.annotations.Test;
 
-import static com.automation.enums.ErrorMsg.*;
-import static com.automation.enums.User.LOCKED;
-import static com.automation.enums.User.STANDARD;
-import static org.hamcrest.Matchers.is;
 
 
 /**
