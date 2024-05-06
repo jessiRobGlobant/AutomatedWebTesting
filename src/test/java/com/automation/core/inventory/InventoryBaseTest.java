@@ -3,7 +3,7 @@ package com.automation.core.inventory;
 import com.automation.core.base.BaseTest;
 import com.automation.enums.User;
 import com.automation.pages.inventory.InventoryPage;
-import com.automation.pages.login.LoginPage;
+import java.util.Map;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 
@@ -12,16 +12,18 @@ import org.testng.annotations.Parameters;
  */
 public abstract class InventoryBaseTest extends BaseTest {
 
-    protected InventoryPage inventoryPage;
+  protected InventoryPage inventoryPage;
+  protected Map<String, Integer> products;
 
-    @BeforeMethod
-    @Parameters({"url"})
-    public void navigateToLoginPage(String url) {
-        LoginPage loginPage = new LoginPage(driver.getDriver(), url);
-        URL = url;
-        loginPage.isPageLoaded();
-        loginPage.setUsername(User.STANDARD)
-                .setPassword(User.STANDARD);
-        inventoryPage = loginPage.clickOnLoginButton(true);
-    }
+  /**
+   * Login and arrive to the inventory Page.
+   *
+   * @param url home url of the page
+   */
+  @BeforeMethod
+  @Parameters({"url"})
+  public void navigateToLoginPage(String url) {
+    URL = url;
+    inventoryPage = login(User.STANDARD);
+  }
 }

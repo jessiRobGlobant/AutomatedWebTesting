@@ -9,9 +9,9 @@
         <classes>
             <class name="com.automation.login.LoginTest"/>
             <class name="com.automation.login.LogoutTest"/>
-            <class name="com.automation.buy_products.addToCartTest"/>
-            <class name="com.automation.buy_products.removeProducts"/>
-            <class name="com.automation.buy_products.checkOutTest"/>
+            <class name="com.automation.buy.products.AddToCartTest"/>
+            <class name="com.automation.buy.products.RemoveProducts"/>
+            <class name="com.automation.buy.products.CheckOutTest"/>
         </classes>
     </test>
 
