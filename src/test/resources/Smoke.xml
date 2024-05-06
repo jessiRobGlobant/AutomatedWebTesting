@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="SmokeSuite">
+
+    <!--Browser test (Chrome, Firefox, Edge, Safari)-->
+    <parameter name="browser" value="Chrome"/>
+    <test name="Suite">
+        <parameter name="url" value="https://www.saucedemo.com"/>
+        <classes>
+            <class name="com.automation.login.LoginTest"/>
+            <methods>
+                <include name="validateLoginSuccessful"/>
+            </methods>
+            <class name="com.automation.login.LogoutTest"/>
+            <class name="com.automation.buy.products.AddToCartTest"/>
+        </classes>
+    </test>
+
+</suite>
